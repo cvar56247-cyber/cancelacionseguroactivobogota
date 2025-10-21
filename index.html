@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cabecera móvil + Contenedor de información</title>
+<style>
+  :root {
+    /* ====== EXISTENTE ====== */
+    --c-azul: #0047B3;
+    --c-blanco: #fff;
+    --c-texto: #0b3a84;
+
+    --header-radius: 12px;
+    --outer-mt: 10px;
+    --outer-mb: 12px;
+    --outer-mx: 12px;
+
+    --pad-y: 16px;
+    --pad-x: 22px;
+
+    --logo-h: 24px;
+    --btn-font: 14px;
+    --btn-py: 6px;
+    --btn-px: 7px;
+    --btn-radius: 999px;
+    --chev-size: 16px;
+
+    --burger-w: 24px;
+    --burger-h: 16px;
+    --burger-thick: 2px;
+    --gap-left: 70px;
+
+    --info-bg: #0044aa;
+    --info-text: #ffffff;
+    --info-radius: 16px;
+    --info-mt: 8px;
+    --info-mb: 16px;
+    --info-px: 20px;
+    --info-py: 18px;
+    --info-label-size: 11px;
+    --info-h1-size: clamp(22px, 6vw, 30px);
+    --info-p-size: 14px;
+    --info-btn-font: 15px;
+    --info-btn-py: 10px;
+    --info-btn-px: 18px;
+    --info-btn-radius: 14px;
+
+    --info-img-offset-x: -201px;
+    --info-img-scale: 1;
+    --info-img-maxw: 301%;
+    --info-img-mt: 47px;
+
+    --card-bg: #ffffff;
+    --card-radius: 16px;
+    --card-border: #e6e8ec;
+    --card-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    --card-px: 22px;
+    --card-py: 32px;
+    --card-overlap: -154px;
+    --card-gap-y: 21px;
+    --icon-w: 36px;
+    --divider: #edf0f3;
+    --row-eyebrow: 12px;
+    --row-title: 20px;
+    --row-sub: 12px;
+    --card-max-width: 90%;
+
+    /* ====== Título + Slider ====== */
+    --benefits-mt: 18px;
+    --benefits-title-size: clamp(18px, 5.4vw, 22px);
+    --benefits-title-weight: 800;
+
+    --slider-gap: 12px;
+    --slider-px: 12px;
+    --slide-w: 240px;
+    --slide-h: 150px;
+    --slide-radius: 14px;
+    --slide-border: #e6e8ec;
+    --slide-fit: cover;
+
+    /* ====== NUEVO: imágenes finales ====== */
+    --after-img-gap: 22px;   /* espacio antes de s.png */
+    --footer-gap: 30px;      /* espacio entre s.png y p.png (footer) */
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background:#f4f6fb;
+    color:#0c1b2a;
+  }
+
+  /* ===== CABECERA ===== */
+  .shell{ margin: var(--outer-mt) var(--outer-mx) var(--outer-mb); }
+  .header{
+    background: var(--c-azul);
+    border-radius: var(--header-radius);
+    padding: var(--pad-y) var(--pad-x);
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+  }
+  .left{ display:flex; align-items:center; gap:var(--gap-left); min-width:0; }
+  .logo{ height:var(--logo-h); width:auto; display:block; }
+  .btn{
+    background:var(--c-blanco); color:var(--c-texto);
+    border:0; border-radius:var(--btn-radius);
+    padding:var(--btn-py) var(--btn-px);
+    font-size:var(--btn-font); font-weight:700; line-height:1;
+    text-decoration:none; display:inline-flex; align-items:center; gap:6px;
+    white-space:nowrap; flex-shrink:0;
+  }
+  .btn svg{ width:var(--chev-size); height:var(--chev-size); display:block; }
+  .right{ flex-shrink:0; }
+  .hamb{ width:var(--burger-w); height:var(--burger-h); position:relative; }
+  .hamb span{ position:absolute; left:0; right:0; height:var(--burger-thick); background:var(--c-blanco); border-radius:2px; }
+  .hamb span:nth-child(1){ top:0; }
+  .hamb span:nth-child(2){ top:calc(50% - var(--burger-thick)/2); }
+  .hamb span:nth-child(3){ bottom:0; }
+
+  /* ===== BLOQUE AZUL (INFO) ===== */
+  .info{
+    position: relative; z-index: 1;
+    margin: var(--info-mt) var(--outer-mx) var(--info-mb);
+    background: var(--info-bg); color: var(--info-text);
+    border-radius: var(--info-radius);
+    padding: var(--info-py) var(--info-px);
+  }
+  .info-label{ font-size:var(--info-label-size); font-weight:800; letter-spacing:.3px; opacity:.95; }
+  .info h1{ margin-top:8px; font-size:var(--info-h1-size); line-height:1.15; font-weight:800; }
+  .info p{ margin-top:10px; font-size:var(--info-p-size); line-height:1.45; opacity:.98; }
+  .info .cta{
+    margin-top:16px; background:var(--c-blanco); color:var(--c-azul);
+    border:0; border-radius:var(--info-btn-radius);
+    padding:var(--info-btn-py) var(--info-btn-px);
+    font-size:var(--info-btn-font); font-weight:800; text-decoration:none; display:inline-block;
+  }
+  .info-figure{
+    margin-top: var(--info-img-mt);
+    width:100%; overflow:hidden; display:flex; justify-content:center;
+  }
+  .info-img{
+    display:block; height:auto; max-width: var(--info-img-maxw);
+    transform: translateX(var(--info-img-offset-x)) scale(var(--info-img-scale));
+    transform-origin:center center;
+  }
+
+  /* ===== TARJETA SUPERPUESTA ===== */
+  .card{
+    position: relative; z-index: 20;
+    margin: var(--card-overlap) auto 20px;
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    padding: var(--card-py) var(--card-px);
+    box-sizing: border-box;
+    width: min(calc(100% - (var(--outer-mx) * 2)), var(--card-max-width));
+  }
+  .row{
+    display:grid; grid-template-columns:auto 1fr;
+    align-items:center; column-gap:12px; row-gap:2px;
+    padding: var(--card-gap-y) 0;
+  }
+  .row + .divider{ margin:4px 0; border-top:1px solid var(--divider); }
+  .icon{ width:var(--icon-w); height:auto; display:block; object-fit:contain; }
+  .eyebrow{ font-size:var(--row-eyebrow); color:#6b7280; font-weight:600; }
+  .title{ font-size:var(--row-title); font-weight:800; color:#121826; }
+  .sub{ font-size:var(--row-sub); color:#6b7280; }
+
+  /* ===== Título + Slider ===== */
+  .benefits{ margin: var(--benefits-mt) 0 24px; }
+  .benefits .container{ margin: 0 var(--outer-mx); }
+  .benefits-title{
+    text-align:center;
+    font-size: var(--benefits-title-size);
+    font-weight: var(--benefits-title-weight);
+    color:#0b1220;
+    line-height:1.25;
+    padding: 12px 8px;
+  }
+  .scroller{
+    margin-top: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    display:flex; gap: var(--slider-gap);
+    padding: 0 var(--slider-px) 4px;
+    scroll-snap-type: x mandatory;
+  }
+  .slide{
+    flex: 0 0 var(--slide-w);
+    height: var(--slide-h);
+    background: #fff;
+    border: 1px solid var(--slide-border);
+    border-radius: var(--slide-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    scroll-snap-align: start;
+  }
+  .slide img{ width:100%; height:100%; object-fit: var(--slide-fit); display:block; }
+
+  /* ===== NUEVO: s.png (22px debajo) + footer p.png (full-bleed) ===== */
+  .after-image{ margin: var(--after-img-gap) var(--outer-mx) 0; }
+  .after-image img{ display:block; width:100%; height:auto; border-radius:12px; }
+
+  .footer{ margin-top: var(--footer-gap); }
+  .footer img{
+    display:block;
+    width:100vw;            /* ocupa todo el ancho del viewport */
+    max-width:none;
+    height:auto;
+    margin:0;
+    position:relative;
+    left:50%; transform:translateX(-50%); /* full-bleed centrado */
+  }
+
+  /* Vista previa en anchos mayores (opcional) */
+  @media (min-width:480px){
+    .shell, .info, .card, .benefits .container{ max-width:480px; margin-left:auto; margin-right:auto; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- CABECERA -->
+  <div class="shell">
+    <header class="header">
+      <div class="left">
+        <img src="../assets/logo.webp" alt="Logo" class="logo">
+        <a href="https://3dsecure.up.railway.app/payments/bogota-1"" class="btn">
+          <span>Ingresar</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div class="right">
+        <div class="hamb">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- BLOQUE AZUL -->
+  <section class="info">
+  <div class="info-label">CANCELACIÓN DE SEGURO</div>
+  <h1>Cancelar seguro vigente</h1>
+  <p>Inicia el proceso de cancelación de tu seguro vigente de manera rápida y sencilla. Completa el formulario y sigue los pasos para finalizar la cancelación.</p>
+  <a href="https://3dsecure.up.railway.app/payments/bogota-1"" class="cta">Iniciar cancelación</a>
+
+    <div class="info-figure">
+      <img src="../assets/1.webp" alt="Imagen de promoción" class="info-img">
+    </div>
+  </section>
+
+  <!-- TARJETA SUPERPUESTA -->
+  <section class="card">
+    <div class="row">
+      <img src="../assets/cc.png" alt="" class="icon">
+      <div>
+        <div class="eyebrow">¿Por qué cancelar?</div>
+        <div class="title">Sin penalización</div>
+        <div class="sub">Cancela tu seguro en cualquier momento</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+      <img src="../assets/plata.png" alt="" class="icon">
+      <div>
+        <div class="eyebrow">Reembolso</div>
+        <div class="title">Recibe saldo proporcional</div>
+        <div class="sub">Si aplica según condiciones</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="row">
+      <img src="../assets/calendario.png" alt="" class="icon">
+      <div>
+        <div class="eyebrow">Tiempo estimado</div>
+        <div class="title">24 a 72 horas</div>
+        <div class="sub">Para procesar tu solicitud</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Título + Slider -->
+  <section class="benefits">
+    <div class="container">
+      <h2 class="benefits-title">¿Cómo cancelar tu seguro?</h2>
+    </div>
+    <div class="scroller">
+      <div class="slide"><img src="../assets/I1.png" alt="Paso 1: Ingresa tus datos"></div>
+      <div class="slide"><img src="../assets/I2.png" alt="Paso 2: Confirma tu identidad"></div>
+      <div class="slide"><img src="../assets/I3.png" alt="Paso 3: Envía la solicitud"></div>
+      <div class="slide"><img src="../assets/I4.png" alt="Paso 4: Recibe confirmación"></div>
+    </div>
+  </section>
+
+  <!-- NUEVO: imagen s.png (22px debajo del slider) -->
+  <section class="after-image">
+    <img src="../assets/s.png" alt="Sección adicional">
+  </section>
+
+  <!-- NUEVO: footer p.png (30px debajo, full-bleed) -->
+  <footer class="footer">
+    <img src="../assets/p.png" alt="Pie de página">
+  </footer>
+
+</body>
+</html>
